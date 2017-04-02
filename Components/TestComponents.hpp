@@ -11,7 +11,7 @@
 #include <SFML/Graphics.hpp>
 #include "../Entity/Component.hpp"
 
-struct TestComponent : Component {
+struct MovementComponent : Component {
     sf::Vector2f position;
     sf::Vector2f velocity;
 

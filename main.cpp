@@ -2,16 +2,17 @@
 #include <SFML/Graphics.hpp>
 
 #include "Entity/Entity.hpp"
-#include "Components/TestComponent.hpp"
+#include "Components/TestComponents.hpp"
 
 int main(int argc, char* argv[])
 {
     Entity o;
-    auto pos = o.addComponent<TestComponent>();
+    auto pos = o.addComponent<MovementComponent>();
     pos->position.x = 12;
-    pos->velocity.y = 0.1;
+    pos->velocity.x = 4;
 
-    sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
+    sf::RenderWindow window(sf::VideoMode(850, 500), "SFML works!");
+    window.setFramerateLimit(120);
     sf::CircleShape shape(100.f);
     shape.setFillColor(sf::Color::Green);
 
@@ -24,7 +25,7 @@ int main(int argc, char* argv[])
                 window.close();
         }
 
-        o.getComponent<TestComponent>()->update(1 / 60.f);
+        o.getComponent<MovementComponent>()->update(1 / 60.f);
 
         shape.setPosition(pos->position.x, pos->position.y);
 
