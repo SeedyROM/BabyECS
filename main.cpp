@@ -6,15 +6,25 @@
 
 int main(int argc, char* argv[])
 {
+    // Non-encapsulated entity.
     Entity o;
     auto transform = o.addComponent<Test::Transform>();
     auto velocity = o.addComponent<Test::Velocity>();
-    velocity->x = 12;
+    auto sprite = o.addComponent<Test::Sprite>();
+    auto boundingBox = o.addComponent<Test::BoundingBox>();
+
+    sf::Texture texture;
+    texture.loadFromFile("Images/test.png");
+
+    transform->position = sf::Vector2f(150, 150);
+    sprite->setTexture(texture);
+    boundingBox->setSize(sprite->getLocalBounds());
+    transform->centerOrigin(sprite->getLocalBounds());
+
+    velocity->x = 30;
 
     sf::RenderWindow window(sf::VideoMode(850, 500), "BabyECS");
     window.setFramerateLimit(120);
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
 
     while (window.isOpen()) {
         sf::Event event;
@@ -24,10 +34,11 @@ int main(int argc, char* argv[])
         }
 
         o.getComponent<Test::Velocity>()->update(1 / 60.f);
-        shape.setPosition(transform->position.x, transform->position.y);
+        o.getComponent<Test::Transform>()->rotation += 2;
 
         window.clear();
-        window.draw(shape);
+        o.getComponent<Test::Sprite>()->draw(window);
+        o.getComponent<Test::BoundingBox>()->draw(window);
         window.display();
     }
 

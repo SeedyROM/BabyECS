@@ -19,3 +19,10 @@ Entity* Component::getParent() {
 void Component::setParent(Entity *_object) {
     object = _object;
 }
+void Component::fail(const std::string name) {
+    std::cout <<
+    "No " << name << " found on parent object, removing this component..."
+    << std::endl;
+    getParent()->removeComponent(this);
+    delete this;
+}
