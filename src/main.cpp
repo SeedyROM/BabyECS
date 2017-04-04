@@ -33,7 +33,7 @@ int main(int argc, char* argv[])
                 window.close();
         }
 
-        o.getComponent<Test::Velocity>()->update(1 / 60.f);
+        o.getComponent<Test::Velocity>()->update(1 / 120.f);
         o.getComponent<Test::Transform>()->rotation += 2;
 
         window.clear();
