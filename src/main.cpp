@@ -14,7 +14,7 @@ int main(int argc, char* argv[])
     auto boundingBox = o.addComponent<Test::BoundingBox>();
 
     sf::Texture texture;
-    texture.loadFromFile("Images/test.png");
+    texture.loadFromFile("../Images/test.png");
 
     transform->position = sf::Vector2f(150, 150);
     sprite->setTexture(texture);
