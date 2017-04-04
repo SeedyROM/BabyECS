@@ -19,10 +19,10 @@ DIR_MACROS= $(__ROOT_DIR__) $(__SRC_DIR__) $(__INCLUDE_DIR__) $(__TEST_DIR__)
 default: $(TARGET)
 
 $(BIN)/main.o: $(SRC)/main.cpp
-	$(CC) $(FLAGS) -I$(INC) -c $^ -o $@
+	$(CC) $(FLAGS) $(DIR_MACROS) -I$(INC) -c $^ -o $@
 
 $(BIN)/%.o: $(SRC)/**/%.cpp
-	$(CC) $(FLAGS) -I$(INC) -c $^ -o $@
+	$(CC) $(FLAGS) $(DIR_MACROS) -I$(INC) -c $^ -o $@
 
 $(TARGET): $(DEPS)
 	$(CC) $(DEPS) $(LIBS) $(FLAGS) -o $@
