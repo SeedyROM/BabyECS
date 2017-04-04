@@ -9,21 +9,31 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include "../Entity/Entity.hpp"
 #include "../Entity/Component.hpp"
 
-struct MovementComponent : Component {
-    sf::Vector2f position;
-    sf::Vector2f velocity;
+namespace Test {
+    struct Transform : Component {
+        sf::Vector2f position;
+        sf::Vector2f scale;
+        float rotation;
+    };
+    struct Velocity : Component {
+        float x, y;
+        Transform *transform;
 
-    void onAdd() {
-        printf("Added a TestComponent with parent: %d\n", object);
-    }
-    void beginStep(float dt) override {
-        position.x += velocity.x * dt;
-        position.y += velocity.y * dt;
-        printf("x: %f | y: %f\n", position.x, position.y);
-    }
-    void onRemove() override {
-        printf("TestComponent removed!\n");
-    }
-};
+        void onAdd() override {
+            transform = getParent()->getComponent<Transform>();
+        }
+        void update(float dt) override {
+            transform->position = calculateNewPosition(dt);
+        }
+        void onRemove() override {
+            printf("TestComponent removed!\n");
+        }
+
+        sf::Vector2f calculateNewPosition(float dt) {
+            return sf::Vector2f(transform->position.x + x * dt, transform->position.y + y * dt);
+        }
+    };
+}

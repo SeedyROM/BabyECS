@@ -9,12 +9,6 @@
 #include "Entity.hpp"
 #include "Component.hpp"
 
-void Component::update(float dt) {
-    beginStep(dt);
-    step(dt);
-    endStep(dt);
-}
-
 void Component::remove() {
     object->removeComponent(this);
 }
