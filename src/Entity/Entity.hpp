@@ -27,6 +27,9 @@ struct Entity {
     void addComponent(Component *component);
     void removeComponent(Component *component);
 
+    void update(float dt);
+    void draw(sf::RenderWindow &window);
+
     //
     // Templated methods..
     //
@@ -48,6 +51,17 @@ struct Entity {
             }
         }
         return nullptr;
+    }
+
+    // Has a component of type.
+    template<typename T>
+    bool hasComponent() {
+        for(auto &c : m_components) {
+            if(typeid(*c) == typeid(T)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     // Remove by component type.

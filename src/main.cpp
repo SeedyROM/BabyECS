@@ -4,24 +4,41 @@
 #include "Entity/Entity.hpp"
 #include "Components/TestComponents.hpp"
 
+using namespace Test;
+
+struct GameObject : Entity {
+    GameObject() {
+        addComponent<Transform>();
+        addComponent<Velocity>();
+        addComponent<Sprite>();
+        addComponent<BoundingBox>();
+    }
+    GameObject(float x, float y) : GameObject() {
+        getComponent<Transform>()->setPosition(sf::Vector2f(x, y));
+    }
+
+    void setupBoundingBox() {
+        if(hasComponent<Sprite>()) {
+            getComponent<BoundingBox>()->setSize(
+                getComponent<Sprite>()->getLocalBounds()
+            );
+            getComponent<Transform>()->centerOrigin(
+                getComponent<Sprite>()->getLocalBounds()
+            );
+        }
+    }
+};
+
 int main(int argc, char* argv[])
 {
-    // Non-encapsulated entity.
-    Entity o;
-    auto transform = o.addComponent<Test::Transform>();
-    auto velocity = o.addComponent<Test::Velocity>();
-    auto sprite = o.addComponent<Test::Sprite>();
-    auto boundingBox = o.addComponent<Test::BoundingBox>();
-
     sf::Texture texture;
     texture.loadFromFile(__SRC_DIR__ + "/Images/test.png");
 
-    transform->position = sf::Vector2f(150, 150);
-    sprite->setTexture(texture);
-    boundingBox->setSize(sprite->getLocalBounds());
-    transform->centerOrigin(sprite->getLocalBounds());
-
-    velocity->x = 30;
+    GameObject o;
+    o.getComponent<Sprite>()->setTexture(texture);
+    o.getComponent<Transform>()->setPosition(sf::Vector2f(150, 150));
+    o.getComponent<Velocity>()->set(sf::Vector2f(30, 15));
+    o.setupBoundingBox();
 
     sf::RenderWindow window(sf::VideoMode(850, 500), "BabyECS");
     window.setFramerateLimit(120);
@@ -33,12 +50,10 @@ int main(int argc, char* argv[])
                 window.close();
         }
 
-        o.getComponent<Test::Velocity>()->update(1 / 120.f);
-        o.getComponent<Test::Transform>()->rotation += 2;
+        o.update(1 / 120.f);
 
-        window.clear();
-        o.getComponent<Test::Sprite>()->draw(window);
-        o.getComponent<Test::BoundingBox>()->draw(window);
+        window.clear(sf::Color(129, 90, 150));
+        o.draw(window);
         window.display();
     }
 

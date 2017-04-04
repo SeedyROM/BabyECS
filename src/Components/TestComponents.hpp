@@ -16,90 +16,115 @@
 
 namespace Test {
     struct Transform : Component {
-        sf::Vector2f position;
-        sf::Vector2f scale;
-        sf::Vector2f origin;
-        float rotation;
-
-        Transform() : scale(1, 1) {}
+        Transform()
+        : m_scale( 1, 1), m_position(0, 0),
+          m_origin(0, 0), m_rotation(0) {}
 
         void centerOrigin(sf::FloatRect rect) {
-            origin.x = rect.width / 2;
-            origin.y = rect.height / 2;
+            m_origin.x = rect.width / 2;
+            m_origin.y = rect.height / 2;
         }
+
+        sf::Vector2f getPosition() const                { return m_position; }
+        void         setPosition(sf::Vector2f position) { m_position = position; }
+        sf::Vector2f getScale() const                   { return m_scale; }
+        void         setScale(sf::Vector2f scale)       { m_scale = scale; }
+        sf::Vector2f getOrigin() const                  { return m_origin; }
+        void         setOrigin(sf::Vector2f origin)     { m_origin = origin; }
+        float        getRotation() const                { return m_rotation; }
+        void         setRotation(float rotation)        { m_rotation = rotation; }
+
+    protected:
+        sf::Vector2f m_position;
+        sf::Vector2f m_scale;
+        sf::Vector2f m_origin;
+        float m_rotation;
     };
     struct Velocity : Component {
-        float x, y;
-        Transform *transform;
-
         void onAdd() override {
-            transform = getParent()->getComponent<Transform>();
-            if(transform == nullptr) {
+            m_transform = getParent()->getComponent<Transform>();
+            if(m_transform == nullptr) {
                 failWithMissingComponent<Transform>();
             }
         }
         void update(float dt) override {
-            transform->position = calculateNewPosition(dt);
+            m_transform->setPosition(calculateNewPosition(dt));
         }
-        void onRemove() override {
-            printf("TestComponent removed!\n");
-        }
+
+        float getX() const  { return m_x; }
+        void  setX(float x) { m_x = x; }
+        float getY() const  { return m_y; }
+        void  setY(float y) { m_y = y; }
 
         sf::Vector2f calculateNewPosition(float dt) {
-            return sf::Vector2f(transform->position.x + x * dt, transform->position.y + y * dt);
+            return sf::Vector2f(m_transform->getPosition().x + m_x * dt, m_transform->getPosition().y + m_y * dt);
         }
-        sf::Vector2f asVector2f() {
-            return sf::Vector2f(x, y);
+
+        void set(sf::Vector2f dimensions) {
+            m_x = dimensions.x;
+            m_y = dimensions.y;
         }
+        sf::Vector2f get() {
+            return sf::Vector2f(m_x, m_y);
+        }
+
+    protected:
+        float m_x, m_y;
+        Transform *m_transform;
     };
     struct Sprite : public sf::Sprite, Component {
-        Transform *transform;
-
         void onAdd() override {
-            transform = getParent()->getComponent<Transform>();
-            if(transform == nullptr) {
+            m_transform = getParent()->getComponent<Transform>();
+            if(m_transform == nullptr) {
                 failWithMissingComponent<Transform>();
             }
         }
-
         void draw(sf::RenderWindow &window) override {
-            setOrigin(transform->origin);
-            setPosition(transform->position);
-            setScale(transform->scale);
-            setRotation(transform->rotation);
+            setOrigin(m_transform->getOrigin());
+            setPosition(m_transform->getPosition());
+            setScale(m_transform->getScale());
+            setRotation(m_transform->getRotation());
             window.draw(*this);
         }
+
+    protected:
+        Transform *m_transform;
     };
     struct BoundingBox : Component {
-        Transform *transform;
-        float width, height;
-
         void onAdd() override {
-            transform = getParent()->getComponent<Transform>();
-            if(transform == nullptr) {
+            auto object = getParent();
+            m_transform = object->getComponent<Transform>();
+            if(m_transform == nullptr) {
                 failWithMissingComponent<Transform>();
             }
         }
-
         void draw(sf::RenderWindow &window) override {
             sf::RectangleShape boxShape;
-            boxShape.setSize(sf::Vector2f(width * transform->scale.x, height * transform->scale.y));
-            boxShape.setPosition(transform->position);
-            boxShape.setRotation(transform->rotation);
-            boxShape.setOrigin(transform->origin);
+            boxShape.setSize(sf::Vector2f(m_width * m_transform->getScale().x, m_height * m_transform->getScale().y));
+            boxShape.setOrigin(m_transform->getOrigin());
+            boxShape.setPosition(m_transform->getPosition());
+            boxShape.setRotation(m_transform->getRotation());
             boxShape.setFillColor(sf::Color::Transparent);
             boxShape.setOutlineColor(sf::Color::Green);
             boxShape.setOutlineThickness(2);
             window.draw(boxShape);
         }
 
+        void setSize(const float width, const float height) {
+            m_width = width;
+            m_height = height;
+        }
         void setSize(const sf::Vector2f &size) {
-            width = size.x;
-            height = size.y;
+            m_width = size.x;
+            m_height = size.y;
         }
         void setSize(const sf::FloatRect &size) {
-            width = size.width;
-            height = size.height;
+            m_width = size.width;
+            m_height = size.height;
         }
+
+    protected:
+        Transform *m_transform;
+        float m_width, m_height;
     };
  }

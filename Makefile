@@ -4,7 +4,7 @@ SRC = src
 INC = include
 LIBS = -lsfml-graphics -lsfml-window -lsfml-system
 FLAGS = -Ofast -std=c++14 -g -ggdb -Wfatal-errors -w
-OBJ = Entity.o Component.o TestComponents.o main.o
+OBJ = main.o Entity.o Component.o TestComponents.o
 TARGET = $(BIN)/BabyECS
 CC = g++
 DEPS = $(patsubst %, $(BIN)/%, $(OBJ))

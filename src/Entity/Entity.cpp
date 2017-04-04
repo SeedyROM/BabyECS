@@ -41,3 +41,15 @@ void Entity::removeComponent(Component *component) {
         }
     }
 }
+
+// Go over our components and call their update and draw functions.
+void Entity::update(float dt) {
+    for(auto &c : m_components) {
+        c->update(dt);
+    }
+}
+void Entity::draw(sf::RenderWindow &window) {
+    for(auto &c : m_components) {
+        c->draw(window);
+    }
+}
