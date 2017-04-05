@@ -50,9 +50,10 @@ int main(int argc, char* argv[])
                 window.close();
         }
 
+        o.getComponent<Transform>()->rotate(5);
         o.update(1 / 120.f);
 
-        window.clear(sf::Color(129, 90, 150));
+        window.clear(sf::Color(0, 0, 0));
         o.draw(window);
         window.display();
     }

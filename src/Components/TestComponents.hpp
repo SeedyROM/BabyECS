@@ -34,6 +34,13 @@ namespace Test {
         float        getRotation() const                { return m_rotation; }
         void         setRotation(float rotation)        { m_rotation = rotation; }
 
+        void rotate(float angle) {
+            m_rotation += angle;
+        }
+        void move(float x, float y) {
+            m_position += sf::Vector2f(x, y);
+        }
+
     protected:
         sf::Vector2f m_position;
         sf::Vector2f m_scale;
