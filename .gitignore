@@ -2,3 +2,4 @@ component_system_test
 **/BabyECS
 **/*.old
 *.o
+*.so
