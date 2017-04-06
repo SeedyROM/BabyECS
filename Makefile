@@ -26,7 +26,7 @@ $(BIN)/main.o: $(SRC)/main.cpp
 	$(CC) $(FLAGS) $(DIR_MACROS) -I$(INC) -c $^ -o $@
 
 $(BIN)/%.o: $(SRC)/**/%.cpp
-	$(CC) $(FLAGS) $(DIR_MACROS) -I$(INC) -c $^ -o $@
+	$(CC) $(FLAGS) -I$(INC) -c $^ -o $@
 
 $(TARGET): $(DEPS)
 	$(CC) $(DEPS) $(LIBS) $(FLAGS) -o $@
