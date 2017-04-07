@@ -21,10 +21,6 @@ void Component::setOwner(Entity *_object) {
     m_parent = _object;
 }
 
-void Component::sendEvent(Event &event) {
-    std::cout << "Received event: " << event.getType() << std::endl;
-}
-
 void Component::fail(const std::string name) {
     std::cout <<
     "No " << name << " found on Owner m_parent, removing this component..."

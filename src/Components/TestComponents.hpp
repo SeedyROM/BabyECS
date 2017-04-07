@@ -11,8 +11,10 @@
 #include <iostream>
 
 #include <SFML/Graphics.hpp>
+
 #include "../Entity/Entity.hpp"
 #include "../Entity/Component.hpp"
+#include "../Event/Event.hpp"
 
 namespace Test {
     struct Transform : Component {
@@ -129,6 +131,7 @@ namespace Test {
             m_width = size.width;
             m_height = size.height;
         }
+
 
     protected:
         Transform *m_transform;

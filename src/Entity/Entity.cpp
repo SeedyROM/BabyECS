@@ -45,10 +45,6 @@ void Entity::removeComponent(Component *component) {
     }
 }
 
-void Entity::sendEventsToComponents() {
-
-}
-
 // Go over our components and call their update and draw functions.
 void Entity::update(float dt) {
     for(auto &c : m_components) {

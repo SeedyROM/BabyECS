@@ -7,18 +7,23 @@
 //
 
 #pragma once
+#include <string>
 
-#include <typeinfo>
-#include "../Helpers/GCC/Demangler.hpp"
-
+// Real fuckin simple!
 struct Event {
-
-    Event() : m_type(getClassName(__FUNCTION__)) {}
     virtual ~Event() {}
+    virtual std::string type() {}
+};
 
-    const std::string getType();
+// Who ever dare use this, beware!
+#define GenerateEventStruct(className) \
+struct className : Event { \
+    using Event::Event; \
+    virtual std::string type() override { \
+        return #className; \
+    }
 
-protected:
-    std::string m_type;
-    std::string getClassName(const char* macroName);
+GenerateEventStruct(TestingTestEvent) // {
+};
+GenerateEventStruct(ATest) // {
 };

@@ -2,9 +2,12 @@
 
 #include <string>
 #include <cstdlib>
+#include <memory>
 #include <cxxabi.h>
 
 namespace Helper {
+    std::string demangleName(const char* mangled_name);
+
     template<typename T>
     std::string demangleNameByType() {
         int status;

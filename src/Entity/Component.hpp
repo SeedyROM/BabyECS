@@ -14,7 +14,7 @@
 #include <queue>
 #include <SFML/Graphics.hpp>
 
-#include "../Helpers/GCC/Demangler.hpp"
+#include "../Helpers/Demangler.hpp"
 
 struct Entity;
 struct Event;
@@ -24,7 +24,7 @@ struct Component {
     virtual void onRemove() {}
     virtual void update(float dt) {}
     virtual void draw(sf::RenderWindow &window) {}
-    virtual void sendEvent(Event &event);
+    virtual void sendEvent(Event &event) {}
 
     void remove();
     Entity* getOwner();

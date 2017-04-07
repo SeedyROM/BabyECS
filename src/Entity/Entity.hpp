@@ -11,6 +11,7 @@
 #include <queue>
 #include <unordered_map>
 #include <typeinfo>
+#include <cstdarg>
 #include <SFML/Graphics.hpp>
 
 #include "Component.hpp"
@@ -27,8 +28,6 @@ struct Entity {
 
     void addComponent(Component *component);
     void removeComponent(Component *component);
-
-    void sendEventsToComponents();
 
     void update(float dt);
     void draw(sf::RenderWindow &window);
@@ -76,6 +75,14 @@ struct Entity {
                 m_components.erase(c);
                 return;
             }
+        }
+    }
+
+    // Send an event to a specific component.
+    template<typename T>
+    void sendEvent(Event &event) {
+        if(hasComponent<T>()) {
+            getComponent<T>()->sendEvent(event);
         }
     }
 

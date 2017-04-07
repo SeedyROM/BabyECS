@@ -4,7 +4,7 @@ SRC = src
 INC = include
 LIBS = -lsfml-graphics -lsfml-window -lsfml-system
 FLAGS = -Ofast -std=c++14 -g -ggdb -Wfatal-errors -w -fPIC
-OBJ = Entity.o Component.o TestComponents.o Event.o
+OBJ = Entity.o Component.o TestComponents.o Demangler.o
 MAIN = main.o
 OBJ := $(OBJ) $(MAIN)
 TARGET := $(BIN)/BabyECS
@@ -28,7 +28,7 @@ $(BIN)/main.o: $(SRC)/main.cpp
 $(BIN)/%.o: $(SRC)/**/%.cpp
 	$(CC) $(FLAGS) -I$(INC) -c $^ -o $@
 
-$(TARGET): $(DEPS)
+$(TARGET): $(DEPS) $(SRC)/**/*.hpp
 	$(CC) $(DEPS) $(LIBS) $(FLAGS) -o $@
 
 $(TARGET).a: $(STATIC_DEPS)
