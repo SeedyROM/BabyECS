@@ -6,7 +6,10 @@
 //
 //
 
+#include "../Event/Event.hpp"
 #include "Entity.hpp"
+
+#include <iostream>
 
 Entity::Entity()  {
     m_state = new Entity::State();
@@ -26,7 +29,7 @@ Entity::Components& Entity::getComponents() {
 }
 
 void Entity::addComponent(Component *component) {
-    component->setParent(this);
+    component->setOwner(this);
     component->onAdd();
     m_components.push_back(component);
 }
@@ -40,6 +43,10 @@ void Entity::removeComponent(Component *component) {
             return;
         }
     }
+}
+
+void Entity::sendEventsToComponents() {
+
 }
 
 // Go over our components and call their update and draw functions.

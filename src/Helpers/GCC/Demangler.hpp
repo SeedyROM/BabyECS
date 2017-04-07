@@ -1,11 +1,12 @@
+#pragma once
+
 #include <string>
 #include <cstdlib>
 #include <cxxabi.h>
 
 namespace Helper {
     template<typename T>
-    std::string demangleName()
-    {
+    std::string demangleNameByType() {
         int status;
         std::string tname = typeid(T).name();
         char *demangled_name = abi::__cxa_demangle(tname.c_str(), NULL, NULL, &status);
@@ -14,5 +15,5 @@ namespace Helper {
             std::free(demangled_name);
         }
         return tname;
-    }    
+    }
 }

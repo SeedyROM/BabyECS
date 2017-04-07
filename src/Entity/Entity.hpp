@@ -8,6 +8,7 @@
 
 #pragma once
 
+#include <queue>
 #include <unordered_map>
 #include <typeinfo>
 #include <SFML/Graphics.hpp>
@@ -26,6 +27,8 @@ struct Entity {
 
     void addComponent(Component *component);
     void removeComponent(Component *component);
+
+    void sendEventsToComponents();
 
     void update(float dt);
     void draw(sf::RenderWindow &window);
@@ -75,7 +78,6 @@ struct Entity {
             }
         }
     }
-
 
 private:
     State *m_state;

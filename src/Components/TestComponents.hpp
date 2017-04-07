@@ -38,7 +38,7 @@ namespace Test {
             m_rotation += angle;
         }
         void move(float x, float y) {
-            m_position += sf::Vector2f(x, y);
+            m_position = sf::Vector2f(m_position.x + x, m_position.y + y);
         }
 
     protected:
@@ -49,7 +49,7 @@ namespace Test {
     };
     struct Velocity : Component {
         void onAdd() override {
-            m_transform = getParent()->getComponent<Transform>();
+            m_transform = getOwner()->getComponent<Transform>();
             if(m_transform == nullptr) {
                 failWithMissingComponent<Transform>();
             }
@@ -81,7 +81,7 @@ namespace Test {
     };
     struct Sprite : public sf::Sprite, Component {
         void onAdd() override {
-            m_transform = getParent()->getComponent<Transform>();
+            m_transform = getOwner()->getComponent<Transform>();
             if(m_transform == nullptr) {
                 failWithMissingComponent<Transform>();
             }
@@ -99,7 +99,7 @@ namespace Test {
     };
     struct BoundingBox : Component {
         void onAdd() override {
-            auto object = getParent();
+            auto object = getOwner();
             m_transform = object->getComponent<Transform>();
             if(m_transform == nullptr) {
                 failWithMissingComponent<Transform>();

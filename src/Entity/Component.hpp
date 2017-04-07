@@ -11,29 +11,32 @@
 #include <iostream>
 #include <typeinfo>
 #include <algorithm>
+#include <queue>
 #include <SFML/Graphics.hpp>
 
 #include "../Helpers/GCC/Demangler.hpp"
 
-class Entity;
+struct Entity;
+struct Event;
 struct Component {
     virtual ~Component() {}
     virtual void onAdd() {}
     virtual void onRemove() {}
     virtual void update(float dt) {}
     virtual void draw(sf::RenderWindow &window) {}
+    virtual void sendEvent(Event &event);
 
     void remove();
-    Entity* getParent();
-    void setParent(Entity *_object);
+    Entity* getOwner();
+    void setOwner(Entity *_object);
 
 protected:
-    Entity* object;
+    Entity* m_parent;
 
     template<typename T>
     void failWithMissingComponent() {
         #ifdef __GNUG__
-            fail(Helper::demangleName<T>());
+            fail(Helper::demangleNameByType<T>());
         #else
             fail(typeid(T).name());
         #endif

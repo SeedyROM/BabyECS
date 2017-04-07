@@ -6,23 +6,29 @@
 //
 //
 
-#include "Entity.hpp"
 #include "Component.hpp"
+#include "Entity.hpp"
+#include "../Event/Event.hpp"
 
 void Component::remove() {
-    object->removeComponent(this);
+    m_parent->removeComponent(this);
 }
 
-Entity* Component::getParent() {
-    return object;
+Entity* Component::getOwner() {
+    return m_parent;
 }
-void Component::setParent(Entity *_object) {
-    object = _object;
+void Component::setOwner(Entity *_object) {
+    m_parent = _object;
 }
+
+void Component::sendEvent(Event &event) {
+    std::cout << "Received event: " << event.getType() << std::endl;
+}
+
 void Component::fail(const std::string name) {
     std::cout <<
-    "No " << name << " found on parent object, removing this component..."
+    "No " << name << " found on Owner m_parent, removing this component..."
     << std::endl;
-    getParent()->removeComponent(this);
+    getOwner()->removeComponent(this);
     delete this;
 }

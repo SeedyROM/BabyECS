@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "Entity/Entity.hpp"
+#include "Event/Event.hpp"
 #include "Components/TestComponents.hpp"
 
 using namespace Test;
@@ -38,6 +39,8 @@ int main(int argc, char* argv[])
     o.getComponent<Sprite>()->setTexture(texture);
     o.getComponent<Transform>()->setPosition(sf::Vector2f(150, 150));
     o.getComponent<Velocity>()->set(sf::Vector2f(30, 15));
+    Event dummyEvent = Event();
+    o.getComponent<Velocity>()->sendEvent(dummyEvent);
     o.setupBoundingBox();
 
     sf::RenderWindow window(sf::VideoMode(850, 500), "BabyECS");
