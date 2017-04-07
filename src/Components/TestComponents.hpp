@@ -2,7 +2,7 @@
 //  TestComponent.hpp
 //  component_system_test
 //
-//  Created by <author> on 02/04/2017.
+//  Created by Zack Kollar on 02/04/2017.
 //
 //
 

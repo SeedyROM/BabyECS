@@ -2,7 +2,7 @@
 //  Component.cpp
 //  component_system_test
 //
-//  Created by <author> on 30/03/2017.
+//  Created by Zack Kollar on 30/03/2017.
 //
 //
 

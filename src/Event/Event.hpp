@@ -2,7 +2,7 @@
 //  Event.hpp
 //  BabyECS
 //
-//  Created by <author> on 06/04/2017.
+//  Created by Zack Kollar on 06/04/2017.
 //
 //
 
