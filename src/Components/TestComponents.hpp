@@ -1,6 +1,6 @@
 //
 //  TestComponent.hpp
-//  component_system_test
+//  BabyECS
 //
 //  Created by Zack Kollar on 02/04/2017.
 //

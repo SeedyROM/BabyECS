@@ -1,6 +1,6 @@
 //
 //  TestComponent.cpp
-//  component_system_test
+//  BabyECS
 //
 //  Created by <author> on 02/04/2017.
 //
